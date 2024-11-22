@@ -204,4 +204,5 @@ def Orange():
 			if "انت استخدمت البرومو كود النهاردة" in MEGA:
 			    return jsonify({"result":"Try again"})
 
-app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+	app.run(host='0.0.0.0', port=5000)
