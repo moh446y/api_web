@@ -135,7 +135,7 @@ def index():
 			return jsonify({"result":"Check Your Data"})
 	else:
 		return jsonify({"result":"Check Your Input"})
-@app.route('ora')
+@app.route('/ora')
 def Orange():
 	none = "5"
 	number = request.args.get('n')
