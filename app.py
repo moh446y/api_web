@@ -203,6 +203,114 @@ def Orange():
 			
 			if "انت استخدمت البرومو كود النهاردة" in MEGA:
 			    return jsonify({"result":"Try again"})
+@app.route('/wi')
+def Watch_it():
+	nu = request.args.get('n')
+	pa = request.args.get('p')
+	def ctv_htv():
+		url_log = "https://services.orange.eg/GetToken.svc/GenerateToken"
+		
+		header_log = {
+		                "Content-Type": "application/json; charset=UTF-8",
+		                "User-Agent":"okhttp/3.14.9"
+		            }
+		
+		data_log = '{"channel":{"ChannelName":"MobinilAndMe","Password":"ig3yh*mk5l42@oj7QAR8yF"}}'
+		
+		ctv = requests.post(url_log, headers=header_log, data=data_log).json()["GenerateTokenResult"]["Token"]
+		htv = hashlib.sha256((ctv + ',{.c][o^uecnlkijh*.iomv:QzCFRcd;drof/zx}w;ls.e85T^#ASwa?=(lk').encode()).hexdigest().upper()
+		return ctv, htv
+	
+	ctv, htv = ctv_htv()
+
+	url = "https://services.orange.eg/APIs/Entertainment/api/EagleRevamp/Fulfillment"
+	
+	headers = {
+	    "_ctv": ctv,
+	    "_htv": htv,
+	    "IsEasyLogin": "false",
+	    "IsAndroid": "true",
+	    "AppVersion": "7.2.0",
+	    "OsVersion": "9",
+	    "net-msg-id": "d988f1d7016673d17199558214911072",
+	    "x-microservice-name": "APMS",
+	    "Content-Type": "application/json; charset=UTF-8",
+	    "Content-Length": "148",
+	    "Host": "services.orange.eg",
+	    "Connection": "Keep-Alive",
+	    "Accept-Encoding": "gzip",
+	    "User-Agent": "okhttp/3.14.9",
+	}
+	
+	data = {
+	    "ChannelName": "MobinilAndMe",
+	    "ChannelPassword": "ig3yh*mk5l42@oj7QAR8yF",
+	    "Dial": nu,
+	    "Language": "ar",
+	    "Password": pa,
+	    "ServiceID": "5",
+	}
+	
+	response = requests.post(url, headers=headers, json=data).json()
+	
+	if response["ErrorDescription"] == "طلبك قيد التنفيذ":
+		return jsonify({'result':'Success'})
+	elif response["ErrorDescription"] == "عفوا أنت مشترك بالفعل":
+		return jsonify({'result': 'Try again'})
+@app.route('/JT')
+def jawwy_Tv():
+	number = request.args.get('n')
+	password = request.args.get('p')
+	def ctv_htv():
+		url_log = "https://services.orange.eg/GetToken.svc/GenerateToken"
+		
+		header_log = {
+		                "Content-Type": "application/json; charset=UTF-8",
+		                "User-Agent":"okhttp/3.14.9"
+		            }
+		
+		data_log = '{"channel":{"ChannelName":"MobinilAndMe","Password":"ig3yh*mk5l42@oj7QAR8yF"}}'
+		
+		ctv = requests.post(url_log, headers=header_log, data=data_log).json()["GenerateTokenResult"]["Token"]
+		htv = hashlib.sha256((ctv + ',{.c][o^uecnlkijh*.iomv:QzCFRcd;drof/zx}w;ls.e85T^#ASwa?=(lk').encode()).hexdigest().upper()
+		return ctv, htv
+	
+	ctv , htv = ctv_htv()
+	headers = {
+	    "_ctv": ctv,
+	    "_htv": htv,
+	    "IsEasyLogin": "false",
+	    "IsAndroid": "true",
+	    "AppVersion": "7.2.0",
+	    "OsVersion": "9",
+	    "net-msg-id": "d988f1d7016673d17199559631391084",
+	    "x-microservice-name": "APMS",
+	    "Content-Type": "application/json; charset=UTF-8",
+	    "Host": "services.orange.eg",
+	    "Connection": "Keep-Alive",
+	    "Accept-Encoding": "gzip",
+	    "User-Agent": "okhttp/3.14.9",
+	}
+	
+	
+	data = {
+	    "ChannelName": "MobinilAndMe",
+	    "ChannelPassword": "ig3yh*mk5l42@oj7QAR8yF",
+	    "Dial": number,
+	    "Language": "ar",
+	    "Password": password,
+	    "ServiceID": "20",
+	}
+	
+	
+	url = "https://services.orange.eg/APIs/Entertainment/api/EagleRevamp/Fulfillment"
+	
+	response = requests.post(url, headers=headers, json=data).json()
+	
+	if response["ErrorDescription"] == "طلبك قيد التنفيذ":
+		return jsonify({'result':'Success'})
+	elif response["ErrorDescription"] == "عفوا أنت مشترك بالفعل":
+		return jsonify({'result': 'Try again'})
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5000)
